@@ -25,7 +25,8 @@ form.addEventListener('submit', async event => {
       );
     } else {
       data.hits.forEach(hit => {
-        const card = document.createElement('div');
+        const card = document.createElement('a');
+        card.href = hit.webformatURL;
         card.classList.add('photo-card');
         const img = document.createElement('img');
         img.src = hit.webformatURL;
@@ -62,4 +63,4 @@ form.addEventListener('submit', async event => {
   }
 });
 
-const onePicture = new SimpleLightbox(`.gallery a`);
+const onePicture = new SimpleLightbox(`a`);
