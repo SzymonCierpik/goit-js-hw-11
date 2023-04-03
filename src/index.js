@@ -16,7 +16,7 @@ form.addEventListener('submit', async event => {
     const response = await axios.get(
       `https://pixabay.com/api/?key=34988834-b35392638b98e8c3c34637c92&q=${encodeURIComponent(
         searchQuery
-      )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true`
+      )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true&page=1&per_page=40`
     );
     const { data } = response;
     if (data.hits.length === 0) {
@@ -36,16 +36,16 @@ form.addEventListener('submit', async event => {
         info.classList.add('info');
         const likes = document.createElement('p');
         likes.classList.add('info-item');
-        likes.innerHTML = `<b>Likes:</b> ${hit.likes}`;
+        likes.innerHTML = `<b>Likes:</b><br>${hit.likes}</br>`;
         const views = document.createElement('p');
         views.classList.add('info-item');
-        views.innerHTML = `<b>Views:</b> ${hit.views}`;
+        views.innerHTML = `<b>Views:</b><br>${hit.views}</br>`;
         const comments = document.createElement('p');
         comments.classList.add('info-item');
-        comments.innerHTML = `<b>Comments:</b> ${hit.comments}`;
+        comments.innerHTML = `<b>Comments:</b><br>${hit.comments}</br>`;
         const downloads = document.createElement('p');
         downloads.classList.add('info-item');
-        downloads.innerHTML = `<b>Downloads:</b> ${hit.downloads}`;
+        downloads.innerHTML = `<b>Downloads:</b><br>${hit.downloads}</br>`;
         info.appendChild(likes);
         info.appendChild(views);
         info.appendChild(comments);
