@@ -53,6 +53,7 @@ form.addEventListener('submit', async event => {
         card.appendChild(img);
         card.appendChild(info);
         gallery.appendChild(card);
+        onePicture.refresh();
       });
     }
   } catch (error) {
@@ -63,4 +64,4 @@ form.addEventListener('submit', async event => {
   }
 });
 
-const onePicture = new SimpleLightbox(`a`);
+const onePicture = new SimpleLightbox('.gallery a');
