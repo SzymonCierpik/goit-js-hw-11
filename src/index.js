@@ -1,42 +1,67 @@
 import './css/styles.css';
+import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 
-async function searchImages(query) {
-  const url = `https://pixabay.com/api/?key=34988834-b35392638b98e8c3c34637c92&q=${encodeURIComponent(
-    query
-  )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true`;
+const form = document.getElementById('search-form');
+const gallery = document.querySelector('.gallery');
+
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  const searchQuery = event.target.searchQuery.value;
+  gallery.innerHTML = '';
+
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
+    const response = await axios.get(
+      `https://pixabay.com/api/?key=34988834-b35392638b98e8c3c34637c92&q=${encodeURIComponent(
+        searchQuery
+      )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true`
+    );
+    const { data } = response;
     if (data.hits.length === 0) {
-      Notiflix.Notify.info(
+      Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else {
-      displayImages(data.hits);
+      data.hits.forEach(hit => {
+        const card = document.createElement('div');
+        card.classList.add('photo-card');
+        const img = document.createElement('img');
+        img.src = hit.webformatURL;
+        img.alt = hit.tags;
+        img.loading = 'lazy';
+        const link = document.createElement('a');
+        const info = document.createElement('div');
+        info.classList.add('info');
+        const likes = document.createElement('p');
+        likes.classList.add('info-item');
+        likes.innerHTML = `<b>Likes:</b> ${hit.likes}`;
+        const views = document.createElement('p');
+        views.classList.add('info-item');
+        views.innerHTML = `<b>Views:</b> ${hit.views}`;
+        const comments = document.createElement('p');
+        comments.classList.add('info-item');
+        comments.innerHTML = `<b>Comments:</b> ${hit.comments}`;
+        const downloads = document.createElement('p');
+        downloads.classList.add('info-item');
+        downloads.innerHTML = `<b>Downloads:</b> ${hit.downloads}`;
+        info.appendChild(likes);
+        info.appendChild(views);
+        info.appendChild(comments);
+        info.appendChild(downloads);
+        card.appendChild(img);
+        card.appendChild(info);
+        gallery.appendChild(card);
+        gallery.appendChild(link);
+      });
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
     Notiflix.Notify.failure(
-      'An error occurred while fetching images. Please try again later.'
+      'Oops! Something went wrong. Please try again later.'
     );
   }
-}
+});
 
-const searchBox = document.querySelector('#search-form');
-
-function displayImages(images) {
-  const gallery = document.querySelector('.gallery');
-  gallery.innerHTML = '';
-  images.forEach(image => {
-    const img = document.createElement('img');
-    img.setAttribute('src', image.webformatURL);
-    img.setAttribute('alt', image.tags);
-    img.setAttribute('data-source', image.largeImageURL);
-  });
-}
+const onePicture = new SimpleLightbox(`.gallery a`);
