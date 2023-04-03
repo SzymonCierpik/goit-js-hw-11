@@ -31,7 +31,6 @@ form.addEventListener('submit', async event => {
         img.src = hit.webformatURL;
         img.alt = hit.tags;
         img.loading = 'lazy';
-        const link = document.createElement('a');
         const info = document.createElement('div');
         info.classList.add('info');
         const likes = document.createElement('p');
@@ -53,7 +52,6 @@ form.addEventListener('submit', async event => {
         card.appendChild(img);
         card.appendChild(info);
         gallery.appendChild(card);
-        gallery.appendChild(link);
       });
     }
   } catch (error) {
