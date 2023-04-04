@@ -6,17 +6,23 @@ import Notiflix from 'notiflix';
 
 const form = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
+let page = 1;
+const loadMoreBtn = document.querySelector('.load-more');
 
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-  const searchQuery = event.target.searchQuery.value;
-  gallery.innerHTML = '';
+loadMoreBtn.style.display = 'none';
 
+loadMoreBtn.addEventListener('click', async () => {
+  page++;
+  const query = form.searchQuery.value;
+  await getImages(query);
+});
+
+async function getImages(query) {
   try {
     const response = await axios.get(
       `https://pixabay.com/api/?key=34988834-b35392638b98e8c3c34637c92&q=${encodeURIComponent(
-        searchQuery
-      )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true&page=1&per_page=40`
+        query
+      )}&lang=pl&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
     );
     const { data } = response;
     if (data.hits.length === 0) {
@@ -24,6 +30,11 @@ form.addEventListener('submit', async event => {
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else {
+      if (data.totalHits > 40 * page) {
+        loadMoreBtn.style.display = 'block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
       data.hits.forEach(hit => {
         const card = document.createElement('a');
         card.href = hit.webformatURL;
@@ -62,6 +73,14 @@ form.addEventListener('submit', async event => {
       'Oops! Something went wrong. Please try again later.'
     );
   }
+}
+
+form.addEventListener('submit', async event => {
+  page = 1;
+  event.preventDefault();
+  const searchQuery = event.target.searchQuery.value;
+  gallery.innerHTML = '';
+  await getImages(searchQuery);
 });
 
 const onePicture = new SimpleLightbox('.gallery a');
