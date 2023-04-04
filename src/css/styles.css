@@ -1,27 +1,16 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: bisque;
 }
-
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: center;
-}
-.photo-card {
-  width: 370px;
-  height: 294px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 150px;
-  outline: white;
+input {
+  font: inherit;
+  padding: 8px;
+  width: 320px;
+  height: 30px;
+  margin-bottom: 16px;
 }
 
 img:hover {
@@ -36,6 +25,7 @@ a {
 img {
   width: 100%;
   height: 100%;
+  border-radius: 10px;
 }
 
 p {
@@ -52,4 +42,40 @@ button {
 .info {
   display: flex;
   justify-content: space-around;
+  border-radius: 10px;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  background-color: cornflowerblue;
+  border-radius: 10px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+.photo-card {
+  width: 450px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px;
+  outline: white;
+}
+
+input:focus,
+textarea:focus {
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  border-color: bisque;
+  outline: none;
+}
+
+input {
+  border-color: transparent;
+  border-radius: 2px;
 }
