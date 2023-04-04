@@ -4,11 +4,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: bisque;
+  margin: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  tab-size: 4; /* 3 */
 }
+
 input {
   font: inherit;
   padding: 8px;
@@ -46,14 +51,16 @@ p {
   margin-top: 10px;
 }
 
+/* background-color: cornflowerblue; */
+
 .search-form {
   display: flex;
   justify-content: center;
   padding-top: 20px;
-  background-color: cornflowerblue;
-  border-radius: 10px;
+  background-color: rgba(100, 148, 237, 0.8);
+  position: fixed;
+  width: 100%;
 }
-
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -101,22 +108,17 @@ input {
 }
 
 .search-btn {
-  width: 200px;
   border-color: transparent;
   border-radius: 2px;
-  height: 49px;
-  margin-left: 20px;
   background: white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
   cursor: pointer;
-  height: 50px;
-  width: 200px;
-  left: 700px;
+  height: 49px;
+  width: 100px;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.86;
   letter-spacing: 0.06em;
+  margin-left: 10px;
 }
 
 .search-btn:hover {
